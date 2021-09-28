@@ -62,7 +62,7 @@ body{
     font-family: sans-serif;
     color: #2b2b2d;
     font-weight: unset;
-    padding-bottom: 15px
+    padding-bottom: 6px
 }
 .form-page-link{
     color: black;
@@ -139,4 +139,10 @@ body{
     margin-top: -15px;
     text-align: left;
     float: left;
+}
+.warning-message{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 13px;
+    color: red;
 }
