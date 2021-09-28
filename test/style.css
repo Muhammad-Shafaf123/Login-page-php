@@ -38,7 +38,7 @@ body{
 .left-form img{
     width: 33px;
     border: 1px solid #c3a8aa;
-    border-radius: 23px;/*akfhalfkhaj*/
+    border-radius: 23px;
 }
 .input-field{
     border: 1px;
@@ -105,7 +105,7 @@ body{
 }
 .logout-link{
     color: #000;
-    font-size: 15px;
+    font-size: 24px;
 }
 
 .icon-row{

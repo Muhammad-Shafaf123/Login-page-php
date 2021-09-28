@@ -8,7 +8,7 @@
   </head>
   <body>
     <?php
-
+    include('dbconnect.php');
     // get the input field values.
     if(isset($_POST['regButton'])){
       $userEmail = $_POST["Email"];
@@ -18,16 +18,6 @@
       }
       // password encryption.
       $encryptedPswd = password_hash($userPassword, PASSWORD_DEFAULT);
-
-      $serverName = "localhost";
-      $userName = "root";
-      $password = "root";
-      $dataBase = "userDB";
-      //dataBase connection.
-      $connector = new mysqli($serverName, $userName, $password, $dataBase);
-      if ($connector->connect_erro){
-        $dbError = "data base connection error.";
-      }
       //check email is already used or not.
       $sqlConnect = "SELECT Email FROM UserRegister where Email='$userEmail'";
       $result = $connector->query($sqlConnect);
@@ -36,12 +26,10 @@
         while($row = $result->fetch_assoc()) {
           if ($userEmail != "" or $userPassword != ""){
             $excitingEmail =  "This email or password is already taken...!";
-
           }
-
         }
-      } else {
-        // if it is new user and register to table
+      }else {
+        // if it's a new user and register to table
         if ($userEmail != "" and $userPassword != ""){
           $sqlConnect = "INSERT INTO UserRegister VALUES ('$userEmail', '$encryptedPswd')";
           if ($connector -> query($sqlConnect) === TRUE){
@@ -72,7 +60,7 @@
                       <input class="input-field" type="password" id="password_field" name="Password" placeholder="Password">
                       <p class="warning-message">
                         <?php
-                        //warning message.
+                        //warning messages
                         echo $registerdEmail;
                         echo $excitingEmail;
                         echo $emptyEmail;

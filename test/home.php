@@ -3,6 +3,8 @@ session_start();
 if (!isset($_SESSION["sessionEmail"])){
   header("Location:index.php");
 }
+$registerName = $_SESSION["sessionEmail"];
+
 
  ?>
 <!DOCTYPE html>
@@ -14,7 +16,7 @@ if (!isset($_SESSION["sessionEmail"])){
   </head>
   <body onload="startCounter()">
     <div class="root-home-page">
-      <h2 class="title-heading">Hello User!</h2>
+      <h2 class="title-heading">Hello <?php echo $registerName; ?>!</h2>
       <h3 class="start-message-text">Our service will be ready in
       <span class="show-timer-count" id="timer"></span> </h3>
       <a class="logout-link" href="logout.php">logout</a>

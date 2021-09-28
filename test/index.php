@@ -15,22 +15,13 @@ if(isset($_SESSION["sessionEmail"])){
   <body>
 
     <?php
+    include('dbconnect.php');
     if(isset($_POST['logButton'])){
       $userEmail = $_POST['emailAddress'];
       $userPassword = $_POST['userPassword'];
       if ($userEmail == "" or $userPassword == ""){
         $emptyEmail = "Please fill in the required field. ";
       }
-      $serverName = "localhost";
-      $userName = "root";
-      $password = "root";
-      $dataBase = "userDB";
-      //connection of dataBase
-      $connector = new mysqli($serverName, $userName, $password, $dataBase);
-      if ($connector->connect_erro){
-        $dbError = "data base connetion error.";
-      }
-
       $sqlConnect = "SELECT * FROM UserRegister where Email='$userEmail'";
       $result = $connector->query($sqlConnect);
       if($result->num_rows > 0){
@@ -44,13 +35,11 @@ if(isset($_SESSION["sessionEmail"])){
               $errorPassword = "incorrect password.";
             }
         }
-
       }else{
         if($userEmail != "" or $userPassword != ""){
           $registerAlert = "Please register your self.";
         }
       }
-
       $connector -> close();
     }
     ?>
