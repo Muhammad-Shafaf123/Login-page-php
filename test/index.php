@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(isset($_SESSION["sessionEmail"])){
+  header("Location: home.php");
+}
+ ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -11,33 +17,42 @@
 
     <?php
     if(isset($_POST['logButton'])){
-    $serverName = "localhost";
-    $userName = "root";
-    $password = "root";
-    $dataBase = "userDB";
-    $connector = new mysqli($serverName, $userName, $password, $dataBase); //connection of dataBase
-    if ($connector->connect_erro){
-      echo "Error";
-    }
-    $Email = $_POST['emailAddress'];
-    $Password = $_POST['userPassword'];
-
-    $sqlConnect = "SELECT Email FROM UserRegister where Email='$Email'";
-    $result = $connector->query($sqlConnect);
-    if ($result->num_rows > 0) {
-      // output data of each row
-      while($row = $result->fetch_assoc()) {
-
-        $emailAlert = "this email is aleary used";
-        session_start();
-        $_session['uname']=$row['Email'];
-        header("Location:home.php");
+      $userEmail = $_POST['emailAddress'];
+      $userPassword = $_POST['userPassword'];
+      if ($userEmail == "" or $userPassword == ""){
+        $emptyEmail = "Please fill in the required field. ";
       }
-    } else {
-      $registerAlert = "Please register your self.";
-       }
+      $serverName = "localhost";
+      $userName = "root";
+      $password = "root";
+      $dataBase = "userDB";
+      //connection of dataBase
+      $connector = new mysqli($serverName, $userName, $password, $dataBase);
+      if ($connector->connect_erro){
+        echo "Error";
+      }
 
-    $connector -> close();
+
+      $sqlConnect = "SELECT * FROM UserRegister where Email='$userEmail'";
+      $result = $connector->query($sqlConnect);
+      if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+          if(password_verify($userPassword,$row['Password'])){
+            session_start();
+            $_SESSION["sessionEmail"] = $userEmail;
+              header("Location:home.php");
+            }else {
+              $errorPassword = "incorrect password.";
+            }
+        }
+      } else {
+        if($userEmail != "" or $userPassword != ""){
+          $registerAlert = "Please register your self.";
+        }
+      }
+
+        $connector -> close();
     }
     ?>
 
@@ -58,9 +73,9 @@
                   <form class="" action="index.php" method="post">
                       <input class="input-field" type="email" id="email_address" name="emailAddress" placeholder="Email">
                       <input class="input-field" type="password" id="password_field" name="userPassword" placeholder="Password">
-                      <p class="warning-message"><?php echo $registerAlert; ?></p>
+                      <p class="warning-message"><?php echo $registerAlert; echo $emptyEmail; echo $errorPassword;?></p>
                       <p class="user-text">New User? <a class="form-page-link" href="register.php">Register</a></p>
-                      <button class="btn-login" onclick="formValidation()" type="submit" name="logButton">Log in</button>
+                      <button class="btn-login"  type="submit" name="logButton">Log in</button>
                   </form>
                 </div>
           </div>
@@ -68,9 +83,5 @@
         </div>
     </div>
     </div>
-
-    <script type="text/javascript" src="stylejs.js">
-    </script>
-
   </body>
 </html>

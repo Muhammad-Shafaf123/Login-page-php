@@ -35,21 +35,23 @@
       //check email is already used or not.
       $sqlConnect = "SELECT Email FROM UserRegister where Email='$userEmail'";
       $result = $connector->query($sqlConnect);
-      $abc = $result->num_rows;
       if ($result->num_rows > 0) {
-        // output data of each row
+        // get the data of each row
         while($row = $result->fetch_assoc()) {
-          if ($userEmail != ""){
+          if ($userEmail != "" or $userPassword != ""){
             $excitingEmail =  "This email or password is already taken...!";
 
           }
 
         }
       } else {
-        $sqlConnect = "INSERT INTO UserRegister VALUES ('$userEmail', '$encryptedPswd')";
-        if ($connector -> query($sqlConnect) === TRUE){
-          header("Location: index.php");
-          exit();
+        // if it is new user and register to table
+        if ($userEmail != "" and $userPassword != ""){
+          $sqlConnect = "INSERT INTO UserRegister VALUES ('$userEmail', '$encryptedPswd')";
+          if ($connector -> query($sqlConnect) === TRUE){
+            header("Location: index.php");
+            exit();
+          }
         }
       }
       $connector -> close();
@@ -71,8 +73,8 @@
                     </div>
                   <p class="note">or use your account</p>
                   <form class=""  method="post">
-                      <input class="input-field" type="text" id="email_address" name="Email" placeholder="Email">
-                      <input class="input-field" type="text" id="password_field" name="Password" placeholder="Password">
+                      <input class="input-field" type="email" id="email_address" name="Email" placeholder="Email">
+                      <input class="input-field" type="password" id="password_field" name="Password" placeholder="Password">
                       <p class="warning-message">
                         <?php echo $registerdEmail; echo $excitingEmail; echo $emptyEmail;  echo $succesMessage;?>
                       </p>
@@ -85,7 +87,5 @@
         </div>
     </div>
     </div>
-    <script type="text/javascript" src="stylejs.js">
-    </script>
   </body>
 </html>

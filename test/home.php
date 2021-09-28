@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION["sessionEmail"])){
+  header("Location:index.php");
+}
+
+ ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -10,9 +17,9 @@
       <h2 class="title-heading">Hello User!</h2>
       <h3 class="start-message-text">Our service will be ready in
       <span class="show-timer-count" id="timer"></span> </h3>
-      <a class="logout-link" href="index.php">logout</a>
+      <a class="logout-link" href="logout.php">logout</a>
       <i class="fab fa-facebook-f"></i>
     </div>
-    <script type="text/javascript" src="stylejs.js"></script>
+    <script type="text/javascript" src="countjs.js"></script>
   </body>
 </html>
