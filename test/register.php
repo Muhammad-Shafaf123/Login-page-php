@@ -2,19 +2,15 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
     <title>Login Page</title>
   </head>
   <body>
-
-
-
     <?php
 
     // get the input field values.
-    if(isset($_POST['regButton']))
-    {
+    if(isset($_POST['regButton'])){
       $userEmail = $_POST["Email"];
       $userPassword = $_POST["Password"];
       if ($userEmail == "" or $userPassword == ""){
@@ -30,7 +26,7 @@
       //dataBase connection.
       $connector = new mysqli($serverName, $userName, $password, $dataBase);
       if ($connector->connect_erro){
-        echo "Error connecting database";
+        $dbError = "data base connection error.";
       }
       //check email is already used or not.
       $sqlConnect = "SELECT Email FROM UserRegister where Email='$userEmail'";
@@ -58,7 +54,6 @@
     }
     ?>
 
-
     <div class="root-div-home">
       <div class="container">
         <div class="form-box-main">
@@ -66,17 +61,24 @@
               <h3 class="form-heading">Register</h3>
                 <div class="left-form">
                     <div class="facebook-logo">
-                      <i class="fa fa-facebook facebook" ></i>
+                      <a href="https://www.facebook.com/"><i class="fa fa-facebook facebook" ></i></a>
                     </div>
                     <div class="twitter-logo">
-                      <i class="fa fa-twitter twitter"></i>
+                      <a href="https://twitter.com/?lang=en"><i class="fa fa-twitter twitter"></i></a>
                     </div>
                   <p class="note">or use your account</p>
                   <form class=""  method="post">
                       <input class="input-field" type="email" id="email_address" name="Email" placeholder="Email">
                       <input class="input-field" type="password" id="password_field" name="Password" placeholder="Password">
                       <p class="warning-message">
-                        <?php echo $registerdEmail; echo $excitingEmail; echo $emptyEmail;  echo $succesMessage;?>
+                        <?php
+                        //warning message.
+                        echo $registerdEmail;
+                        echo $excitingEmail;
+                        echo $emptyEmail;
+                        echo $succesMessage;
+                        echo $dbError;
+                        ?>
                       </p>
                       <p class="user-text">Already have a n account? <a class="form-page-link" href="index.php">Login</a></p>
                       <button class="btn-login" type="submit" name="regButton"> Register</button>

@@ -3,7 +3,7 @@ session_start();
 if(isset($_SESSION["sessionEmail"])){
   header("Location: home.php");
 }
- ?>
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -13,7 +13,6 @@ if(isset($_SESSION["sessionEmail"])){
     <title>Login Page</title>
   </head>
   <body>
-
 
     <?php
     if(isset($_POST['logButton'])){
@@ -29,13 +28,12 @@ if(isset($_SESSION["sessionEmail"])){
       //connection of dataBase
       $connector = new mysqli($serverName, $userName, $password, $dataBase);
       if ($connector->connect_erro){
-        echo "Error";
+        $dbError = "data base connetion error.";
       }
-
 
       $sqlConnect = "SELECT * FROM UserRegister where Email='$userEmail'";
       $result = $connector->query($sqlConnect);
-      if ($result->num_rows > 0) {
+      if($result->num_rows > 0){
         // output data of each row
         while($row = $result->fetch_assoc()) {
           if(password_verify($userPassword,$row['Password'])){
@@ -46,16 +44,16 @@ if(isset($_SESSION["sessionEmail"])){
               $errorPassword = "incorrect password.";
             }
         }
-      } else {
+
+      }else{
         if($userEmail != "" or $userPassword != ""){
           $registerAlert = "Please register your self.";
         }
       }
 
-        $connector -> close();
+      $connector -> close();
     }
     ?>
-
 
     <div class="root-div-home">
       <div class="container">
@@ -64,16 +62,24 @@ if(isset($_SESSION["sessionEmail"])){
               <h3 class="form-heading">Login</h3>
                 <div class="left-form">
                     <div class="facebook-logo">
-                      <i class="fa fa-facebook facebook" ></i>
+                      <a href="https://www.facebook.com/"><i class="fa fa-facebook facebook" ></i></a>
                     </div>
                     <div class="twitter-logo">
-                      <i class="fa fa-twitter twitter"></i>
+                      <a href="https://twitter.com/?lang=en"><i class="fa fa-twitter twitter"></i></a>
                     </div>
                   <p class="note">or use your account</p>
                   <form class="" action="index.php" method="post">
                       <input class="input-field" type="email" id="email_address" name="emailAddress" placeholder="Email">
                       <input class="input-field" type="password" id="password_field" name="userPassword" placeholder="Password">
-                      <p class="warning-message"><?php echo $registerAlert; echo $emptyEmail; echo $errorPassword;?></p>
+                      <p class="warning-message">
+                        <?php
+                        //warning messages.
+                         echo $registerAlert;
+                         echo $emptyEmail;
+                         echo $errorPassword;
+                         echo $dbError;
+                         ?>
+                      </p>
                       <p class="user-text">New User? <a class="form-page-link" href="register.php">Register</a></p>
                       <button class="btn-login"  type="submit" name="logButton">Log in</button>
                   </form>
