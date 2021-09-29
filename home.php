@@ -12,7 +12,7 @@ $registerName = $_SESSION["sessionEmail"];
   <head>
     <meta charset="utf-8">
     <title>Home Page</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body onload="startCounter()">
     <div class="root-home-page">
@@ -22,6 +22,6 @@ $registerName = $_SESSION["sessionEmail"];
       <a class="logout-link" href="logout.php">logout</a>
       <i class="fab fa-facebook-f"></i>
     </div>
-    <script type="text/javascript" src="countjs.js"></script>
+    <script type="text/javascript" src="assets/js/countjs.js"></script>
   </body>
 </html>
