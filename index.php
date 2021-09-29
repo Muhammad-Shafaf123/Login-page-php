@@ -63,7 +63,7 @@ if(isset($_SESSION["sessionEmail"])){
                       <input class="input-field" type="password" id="password_field" name="userPassword" placeholder="Password">
                       <p class="warning-message">
                         <?php
-                        //warning messages.
+                         //warning messages.
                          echo $registerAlert;
                          echo $emptyEmail;
                          echo $errorPassword;
